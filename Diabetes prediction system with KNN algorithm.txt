@@ -1,0 +1,96 @@
+# First let's start with calling all the dependencies for this project 
+import numpy as np 
+import pandas as pd
+import math
+import matplotlib.pyplot as plt
+import seaborn as sns 
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import metrics
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import KFold
+%matplotlib inline
+location = '../input/diabetes/diabetes.csv'
+f = pd.read_csv(location)
+data = pd.DataFrame(f)
+data.head()
+
+
+#cleaning the dataset  from missing values or zeros
+#zeros or missing values will be replaced by the mean of that particular column
+# this practice is the best practie to have a readable and consistent data values
+cols_clean = ['Glucose','BloodPressure','SkinThickness','Insulin','BMI','Pedigree']
+# with this function , i dealt with missing values and NaN values 
+for i in cols_clean:
+    data[i] = data[i].replace(0,np.NaN)
+    cols_mean = int(data[i].mean(skipna=True))
+    data[i] = data[i].replace(np.NaN, cols_mean)
+data1 = data
+data1.head().style.highlight_max(color="lightblue").highlight_min(color="red")
+
+In [4]:
+# Let's take a quick statistcal view of the data provided
+print(data1.describe())
+
+The diabetes updated dataset is ready for a basic plotting, in order to see how would our data looks like, also plotting at this stage will help me decide which column I will choose to run a K-nearest neighbour (KNN) experiment. For plotting I’ve used pairplot() function with the help of Seaborn library , that will give me a range of graph plotting for each group of data presented in the dataset .
+In [5]:
+graph = ['Glucose','Insulin','BMI','Age','Outcome']
+sns.set()
+print(sns.pairplot(data1[graph],hue='Outcome', diag_kind='kde'))
+<seaborn.axisgrid.PairGrid object at 0x7ff431934610>
+
+
+
+# for the purpose of simplicity and analysing the most relevent  data , we will select three features of the dataset
+# Glucose , Insulin and BMI
+q_cols = ['Glucose','Insulin','BMI','Outcome']
+# defining variables and features for the dataset for splitting 
+df = data1[q_cols]
+print(df.head(2))
+Glucose  Insulin   BMI  Outcome
+0    148.0    155.0  33.6        1
+1     85.0    155.0  26.6        0
+
+
+
+# let's split the data into training and testing datasets
+split = 0.75 # 75% train and 25% test dataset
+total_len = len(df)
+split_df = int(total_len*split)
+train, test = df.iloc[:split_df,0:4],df.iloc[split_df:,0:4] 
+train_x = train[['Glucose','Insulin','BMI']]
+train_y = train['Outcome']
+test_x = test[['Glucose','Insulin','BMI']]
+test_y = test['Outcome']
+
+
+a = len(train_x) 
+b = len(test_x)
+print(' Training data =',a,'\n','Testing data =',b,'\n','Total data length = ',a+b)
+Training data = 576 
+ Testing data = 192 
+ Total data length =  768
+
+
+# let's test it using KNN  classifier with a loop to cover as much n-neightbors as possible 
+def knn(x_train, y_train, x_test, y_test,n):
+    n_range = range(1, n)
+    results = []
+    for n in n_range:
+        knn = KNeighborsClassifier(n_neighbors=n)
+        knn.fit(x_train, y_train)
+        #Predict the response for test dataset
+        predict_y = knn.predict(x_test)
+        accuracy = metrics.accuracy_score(y_test, predict_y)
+        #matrix = confusion_matrix(y_test,predict_y)
+        #seaborn_matrix = sns.heatmap(matrix, annot = True, cmap="Blues",cbar=True)
+        results.append(accuracy)
+    return results
+
+
+n= 500
+output = knn(train_x,train_y,test_x,test_y,n)
+n_range = range(1, n)
+plt.plot(n_range, output)
+
+
+[<matplotlib.lines.Line2D at 0x7ff42c0bf450>]

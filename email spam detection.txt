@@ -133,6 +133,11 @@ C = metrics.confusion_matrix(y_test,y_pred)
 print("Confusion matrix: ", C)
 Confusion matrix:  [[700  19]
  [189 127]]
+
+
+
+# SVM Classifier
+
 model = SVC(C = 1)   # cost C = 1
 ​
 model.fit(x_train, y_train)

@@ -100,3 +100,109 @@ def main():
 	
 if __name__=="__main__":
 	main()
+
+
+
+
+
+
+
+
+
+
+
+Certainly, let's explain how to implement the Gradient Descent algorithm to find the local minimum of a function, using the specific example of the function y = (x + 3)², starting from the point x = 2:
+
+1. **Understand the Objective**:
+   - You want to find the lowest point (local minimum) of the function y = (x + 3)².
+
+2. **Gradient Descent Overview**:
+   - Gradient Descent is an iterative optimization algorithm that helps find the minimum of a function. It works by adjusting the input value (in this case, 'x') in small steps, following the direction of steepest descent (the negative gradient), to reach the local minimum.
+
+3. **Define the Function**:
+   - In your case, the function is y = (x + 3)². This means that you want to minimize 'y' by adjusting 'x'.
+
+4. **Choose an Initial Point**:
+   - You start from a specific 'x' value, which is 2 in this example.
+
+5. **Set Hyperparameters**:
+   - You need to define two hyperparameters:
+     - Learning Rate (α): This controls the size of the steps you take while adjusting 'x'. A small learning rate may require more iterations but is safer, while a larger rate can converge faster but may overshoot the minimum.
+     - Number of Iterations: Decide how many steps you want to take to reach the minimum. This depends on the convergence of the algorithm.
+
+6. **Initialize Iteration Count**:
+   - Set an initial value for the iteration count (let's call it 'i') to 0.
+
+7. **Update 'x' using Gradient Descent**:
+   - In each iteration, calculate the gradient of the function with respect to 'x'. This tells you the direction in which you need to move 'x' to reach the minimum.
+   - Adjust 'x' by subtracting the gradient times the learning rate:
+     - x = x - α * (∂y/∂x), where ∂y/∂x is the derivative of the function.
+
+8. **Increment Iteration Count**:
+   - Increase 'i' by 1.
+
+9. **Repeat Steps 7-8**:
+   - Continue steps 7 and 8 for the specified number of iterations or until 'x' doesn't change significantly.
+
+10. **Check for Convergence**:
+    - You can add a stopping criterion, such as checking if the change in 'x' is very small or if 'y' is not decreasing significantly between iterations.
+
+11. **Final 'x' Value**:
+    - The 'x' value you end up with is the local minimum of the function.
+
+In this specific case, you would apply these steps iteratively, adjusting 'x' using the gradient of the function y = (x + 3)² until you find the local minimum. Be cautious with the choice of learning rate, as a very large learning rate may cause the algorithm to overshoot the minimum, and a very small rate may make the algorithm converge very slowly.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sure, let's break it down in simple terms:
+
+1. **Objective**:
+   - We want to find the lowest point on a curve, like finding the bottom of a valley.
+
+2. **Gradient Descent**:
+   - Imagine you're on the side of a hill, and you want to reach the lowest point. You take small steps downhill, guided by the slope. If it's steeper, you take bigger steps; if it's flatter, you take smaller steps.
+
+3. **Function**:
+   - In our case, the function is like a mathematical hill. The function y = (x + 3)² tells us the shape of the hill.
+
+4. **Starting Point**:
+   - You start at a particular position, like standing at the side of the hill. In our case, you start at x = 2.
+
+5. **Controls**:
+   - You can control two things:
+     - **Step Size (Learning Rate)**: How big each step should be. A small step size means you'll be careful, while a big step size means you might overshoot.
+     - **Number of Steps**: How many times you're willing to take a step downhill.
+
+6. **Initial Step Counter**:
+   - You begin with a count of 0, showing you haven't taken any steps yet.
+
+7. **Adjust Position with Gradient Descent**:
+   - In each step, you check the slope at your current position (the gradient of the function).
+   - You then take a step in the opposite direction of the slope, multiplied by the step size:
+     - If the slope is steep (pointing up), you take a big step down.
+     - If the slope is shallow (pointing down), you take a small step down.
+   - You repeat this step several times, making your way down the hill.
+
+8. **Increment Step Counter**:
+   - After each step, you increase your step counter by 1.
+
+9. **Repeat Steps 7-8**:
+   - Keep taking steps and counting them until you reach the lowest point or until you decide to stop.
+
+10. **Check for Stopping**:
+    - You can choose to stop based on a rule. For example, you stop if the hill gets very flat (almost level) or if you've taken a lot of steps.
+
+11. **Final Position**:
+    - The position you end up in is the point on the curve (function) where you've found the local minimum. It's like finding the bottom of the valley.
+
+That's how you use Gradient Descent to find the lowest point on a curve, like finding the lowest part of a hill.

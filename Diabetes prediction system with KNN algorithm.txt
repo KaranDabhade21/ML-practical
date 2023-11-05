@@ -9,7 +9,8 @@ from sklearn import metrics
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
 %matplotlib inline
-location = '../input/diabetes/diabetes.csv'
+
+#location = '../input/diabetes/diabetes.csv'
 f = pd.read_csv(location)
 data = pd.DataFrame(f)
 data.head()
